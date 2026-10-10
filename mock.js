@@ -10,8 +10,22 @@ const THEORY_MOCK = {
   units: { water: 'ml', move: '分钟', sleep: '小时' },
   targets: { water: '2000ml', move: '30 分钟', sleep: '8h' },
 
-  /* 初始状态（未写入 localStorage 时使用） */
-  defaults: { water: 0, move: 0, sleep: 0, streak: 0 },
+  /* 初始状态（未写入 localStorage 时使用）——新用户从零开始 */
+  defaults: { water: 0, move: 0, sleep: 0, streak: 0, history: [], demo: false },
+
+  /* 演示模式载荷：一键载入的示例数据，供新用户快速体验产品功能 */
+  demo: {
+    water: 750, move: 20, sleep: 7.2, streak: 5,
+    /* 近 6 日示例修行记录（第 7 格为今日实时数据） */
+    history: [
+      { day: '六', water: 1200, move: 20, sleep: 7.5 },
+      { day: '日', water: 1750, move: 35, sleep: 8 },
+      { day: '一', water: 2100, move: 15, sleep: 6 },
+      { day: '二', water: 900,  move: 40, sleep: 7 },
+      { day: '三', water: 1800, move: 30, sleep: 8 },
+      { day: '四', water: 1500, move: 25, sleep: 7.5 }
+    ]
+  },
 
   /* 修为等级：按连修天数进阶 */
   ranks: [
@@ -20,16 +34,6 @@ const THEORY_MOCK = {
     { name: '理论硕士', min: 7 },
     { name: '理论大师', min: 14 },
     { name: '理论宗师', min: 30 }
-  ],
-
-  /* 近 6 日修行记录（第 7 格为今日实时数据） */
-  history: [
-    { day: '六', water: 1200, move: 20, sleep: 7.5 },
-    { day: '日', water: 1750, move: 35, sleep: 8 },
-    { day: '一', water: 2100, move: 15, sleep: 6 },
-    { day: '二', water: 900,  move: 40, sleep: 7 },
-    { day: '三', water: 1800, move: 30, sleep: 8 },
-    { day: '四', water: 1500, move: 25, sleep: 7.5 }
   ],
 
   /* 每日评语：按当日完成的理论数量取 */
