@@ -11,7 +11,7 @@ const THEORY_MOCK = {
   targets: { water: '2000ml', move: '30 分钟', sleep: '8h' },
 
   /* 初始状态（未写入 localStorage 时使用） */
-  defaults: { water: 750, move: 10, sleep: 6.5, streak: 12 },
+  defaults: { water: 0, move: 0, sleep: 0, streak: 0 },
 
   /* 修为等级：按连修天数进阶 */
   ranks: [
