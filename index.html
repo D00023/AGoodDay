@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AGoodDay · 三大理论健康修行</title>
+<meta name="description" content="AGoodDay —— 以「大水 / 薄肌 / 大睡」三大理论为主题的趣味健康打卡 APP：统计饮水量、锻炼量、睡眠量。">
+<!-- PWA -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#F7F2E7">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="AGoodDay">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone">
+  <header>
+    <div class="brand">
+      <div class="seal">三大<br>理论</div>
+      <h1>AGoodDay<small>三大理论 · 健康修行手册</small></h1>
+    </div>
+    <div class="date-chip" id="dateChip">--月--日</div>
+  </header>
+
+  <main>
+    <!-- ===== 首页 · 今日修行 ===== -->
+    <section class="view active" id="view-home">
+      <div class="rank-card">
+        <div class="rank-label">当前修为 · THEORY RANK</div>
+        <div class="rank-name" id="rankName">--</div>
+        <div class="rank-bar"><i id="rankBar"></i></div>
+        <div class="rank-tip" id="rankTip">--</div>
+      </div>
+
+      <div class="section-title">今日修行 <span id="doneCount">TODAY · 0/3</span></div>
+
+      <div class="theory water" id="card-water">
+        <div class="deco">水</div>
+        <div class="done-tag">圆满</div>
+        <div class="ring">
+          <svg width="74" height="74"><circle cx="37" cy="37" r="30" fill="none" stroke="rgba(62,124,184,.18)" stroke-width="8"/>
+          <circle id="ring-water" cx="37" cy="37" r="30" fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" style="stroke:var(--water);transition:stroke-dashoffset .6s ease"/></svg>
+          <div class="val"><span id="pct-water">0%</span><small>大水</small></div>
+        </div>
+        <div class="theory-info">
+          <div class="theory-name">大水理论<i>DRINK</i></div>
+          <div class="theory-desc">少喝奶茶饮料，多喝大瓶矿泉水</div>
+          <div class="theory-val"><span id="val-water">0</span> / 2000 <small>ml</small></div>
+          <button class="quick-btn" onclick="quickAdd('water')">+250ml 灌一口</button>
+        </div>
+      </div>
+
+      <div class="theory muscle" id="card-muscle">
+        <div class="deco">肌</div>
+        <div class="done-tag">圆满</div>
+        <div class="ring">
+          <svg width="74" height="74"><circle cx="37" cy="37" r="30" fill="none" stroke="rgba(78,125,82,.18)" stroke-width="8"/>
+          <circle id="ring-muscle" cx="37" cy="37" r="30" fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" style="stroke:var(--muscle);transition:stroke-dashoffset .6s ease"/></svg>
+          <div class="val"><span id="pct-muscle">0%</span><small>薄肌</small></div>
+        </div>
+        <div class="theory-info">
+          <div class="theory-name">薄肌理论<i>MOVE</i></div>
+          <div class="theory-desc">不追求夸张大肌肉，练出清晰自然的线条</div>
+          <div class="theory-val"><span id="val-move">0</span> / 30 <small>分钟</small></div>
+          <button class="quick-btn" onclick="quickAdd('move')">+10 分钟开练</button>
+        </div>
+      </div>
+
+      <div class="theory sleep" id="card-sleep">
+        <div class="deco">睡</div>
+        <div class="done-tag">圆满</div>
+        <div class="ring">
+          <svg width="74" height="74"><circle cx="37" cy="37" r="30" fill="none" stroke="rgba(169,107,88,.18)" stroke-width="8"/>
+          <circle id="ring-sleep" cx="37" cy="37" r="30" fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" style="stroke:var(--sleep);transition:stroke-dashoffset .6s ease"/></svg>
+          <div class="val"><span id="pct-sleep">0%</span><small>大睡</small></div>
+        </div>
+        <div class="theory-info">
+          <div class="theory-name">大睡理论<i>SLEEP</i></div>
+          <div class="theory-desc">每天睡满 8 小时，睡眠就是生产力</div>
+          <div class="theory-val"><span id="val-sleep">0</span> / 8 <small>小时</small></div>
+          <button class="quick-btn" onclick="quickAdd('sleep')">+0.5h 补个觉</button>
+        </div>
+      </div>
+
+      <div class="comment" id="commentBox">
+        <b>今日评语</b>
+        <p id="commentText">开卷有益，先灌第一口水。</p>
+        <div class="seal-stamp">三花<br>聚顶</div>
+      </div>
+    </section>
+
+    <!-- ===== 打卡页 ===== -->
+    <section class="view" id="view-log">
+      <div class="section-title">修行打卡 <span>CHECK-IN</span></div>
+
+      <div class="log-card water">
+        <div class="log-head"><h3>大水 · 饮水量</h3><div class="num"><span id="log-water">0</span><small>ml / 2000</small></div></div>
+        <div class="meter"><i id="meter-water"></i></div>
+        <div class="log-actions">
+          <div class="stepper">
+            <button class="step-btn" aria-label="减少饮水" onclick="stepMetric('water',-1)">−</button>
+            <button class="step-btn" aria-label="增加饮水" onclick="stepMetric('water',1)">＋</button>
+          </div>
+          <div class="chips">
+            <button class="chip" onclick="addMetric('water',250,'+250ml 一杯入腹')">+250ml 一杯</button>
+            <button class="chip" onclick="addMetric('water',550,'+550ml 大瓶矿泉')">+550ml 大瓶</button>
+            <button class="chip" onclick="addMetric('water',1500,'+1.5L 桶装豪饮')">+1.5L 桶装</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="log-card muscle">
+        <div class="log-head"><h3>薄肌 · 锻炼量</h3><div class="num"><span id="log-move">0</span><small>分钟 / 30</small></div></div>
+        <div class="meter"><i id="meter-move"></i></div>
+        <div class="log-actions">
+          <div class="stepper">
+            <button class="step-btn" aria-label="减少锻炼" onclick="stepMetric('move',-1)">−</button>
+            <button class="step-btn" aria-label="增加锻炼" onclick="stepMetric('move',1)">＋</button>
+          </div>
+          <div class="chips">
+            <button class="chip" onclick="addMetric('move',10,'+10 分钟拉伸开练')">+10 分拉伸</button>
+            <button class="chip" onclick="addMetric('move',30,'+30 分钟有氧达成')">+30 分有氧</button>
+            <button class="chip" onclick="addMetric('move',60,'+60 分钟力量狂练')">+60 分力量</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="log-card sleep">
+        <div class="log-head"><h3>大睡 · 睡眠量</h3><div class="num"><span id="log-sleep">0</span><small>小时 / 8</small></div></div>
+        <div class="meter"><i id="meter-sleep"></i></div>
+        <div class="log-actions">
+          <div class="stepper">
+            <button class="step-btn" aria-label="减少睡眠" onclick="stepMetric('sleep',-1)">−</button>
+            <button class="step-btn" aria-label="增加睡眠" onclick="stepMetric('sleep',1)">＋</button>
+          </div>
+          <div class="chips">
+            <button class="chip" onclick="setMetric('sleep',6,'睡眠记为 6h 及格')">6h 及格</button>
+            <button class="chip" onclick="setMetric('sleep',7.5,'睡眠记为 7.5h 标准')">7.5h 标准</button>
+            <button class="chip" onclick="setMetric('sleep',8,'睡眠记为 8h 满修')">8h 满修</button>
+          </div>
+        </div>
+      </div>
+
+      <span class="reset-link" onclick="resetAll()">重置今日修行</span>
+    </section>
+
+    <!-- ===== 统计页 ===== -->
+    <section class="view" id="view-stats">
+      <div class="section-title">修行战绩 <span>STATISTICS</span></div>
+      <div class="stat-summary">
+        <div class="stat-pill water"><b id="sum-water">0%</b><span>大水完成率</span></div>
+        <div class="stat-pill muscle"><b id="sum-move">0%</b><span>薄肌完成率</span></div>
+        <div class="stat-pill sleep"><b id="sum-sleep">0%</b><span>大睡完成率</span></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>近七日 · 三大理论修行度</h3>
+        <div class="sub">柱高代表当日各理论完成度（满格 100%）</div>
+        <div class="bars" id="bars"></div>
+        <div class="legend">
+          <span><i style="background:var(--water)"></i>大水</span>
+          <span><i style="background:var(--muscle)"></i>薄肌</span>
+          <span><i style="background:var(--sleep)"></i>大睡</span>
+        </div>
+      </div>
+
+      <div class="week-grid">
+        <div class="week-item"><b id="weekWater">0<small>L</small></b><span>本周总饮水</span></div>
+        <div class="week-item"><b id="weekMove">0<small>分钟</small></b><span>本周总锻炼</span></div>
+        <div class="week-item"><b id="weekSleep">0<small>h</small></b><span>本周平均睡眠</span></div>
+        <div class="week-item"><b id="weekPerfect">0<small>天</small></b><span>三花聚顶天数</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 成就页 ===== -->
+    <section class="view" id="view-me">
+      <div class="avatar-zone">
+        <div class="halo" id="halo"><div class="inner">理</div></div>
+        <h2 id="meRank">--</h2>
+        <p id="meSub">修行中</p>
+      </div>
+
+      <div class="streak-card">
+        <span>理论连修</span>
+        <b id="streakNum">0 天</b>
+        <span id="streakTip">--</span>
+      </div>
+
+      <div class="section-title">进阶路线 <span>RANK PATH</span></div>
+      <div class="rank-path" id="rankPath"></div>
+
+      <div class="section-title">成就徽章 <span>ACHIEVEMENTS</span></div>
+      <div class="badges" id="badgeGrid"></div>
+
+      <div class="quote-card">
+        <p id="quoteText">--</p>
+        <span>—— 三大理论 · 语录</span>
+      </div>
+
+      <button class="install-btn" id="installBtn" onclick="installPWA()" style="display:none">安装到桌面 · 离线可用</button>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab on" onclick="switchTab('home',this)"><span class="ico">修</span>首页</button>
+    <button class="tab" onclick="switchTab('log',this)"><span class="ico">记</span>打卡</button>
+    <button class="tab" onclick="switchTab('stats',this)"><span class="ico">谱</span>统计</button>
+    <button class="tab" onclick="switchTab('me',this)"><span class="ico">勋</span>成就</button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="mock.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
