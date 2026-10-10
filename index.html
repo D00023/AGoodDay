@@ -31,6 +31,9 @@
   <main>
     <!-- ===== 首页 · 今日修行 ===== -->
     <section class="view active" id="view-home">
+      <div class="demo-banner" id="demoBanner" onclick="toggleDemo()">
+        <b>初来乍到？</b> 点此开启「演示模式」，30 秒体验三大理论全流程 →
+      </div>
       <div class="rank-card">
         <div class="rank-label">当前修为 · THEORY RANK</div>
         <div class="rank-name" id="rankName">--</div>
@@ -147,7 +150,7 @@
         </div>
       </div>
 
-      <span class="reset-link" onclick="resetAll()">重置今日修行</span>
+      <span class="reset-link" onclick="resetAll()">清空全部修行数据</span>
     </section>
 
     <!-- ===== 统计页 ===== -->
@@ -203,6 +206,7 @@
         <span>—— 三大理论 · 语录</span>
       </div>
 
+      <button class="demo-btn" id="demoBtn" onclick="toggleDemo()">演示模式 · 快速体验</button>
       <button class="install-btn" id="installBtn" onclick="installPWA()" style="display:none">安装到桌面 · 离线可用</button>
     </section>
   </main>
