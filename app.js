@@ -12,12 +12,12 @@ const KEYS  = ['water', 'move', 'sleep'];
 
 let state = { ...THEORY_MOCK.defaults };
 try {
-  const saved = JSON.parse(localStorage.getItem('agoodday-data') || 'null');
+  const saved = JSON.parse(localStorage.getItem('agoodday-data-v2') || 'null');
   if (saved) state = Object.assign(state, saved);
 } catch (e) { /* 存档损坏时使用默认值 */ }
 
 function save() {
-  try { localStorage.setItem('agoodday-data', JSON.stringify(state)); } catch (e) {}
+  try { localStorage.setItem('agoodday-data-v2', JSON.stringify(state)); } catch (e) {}
 }
 
 /* ---------- 工具 ---------- */
