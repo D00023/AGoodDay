@@ -59,13 +59,13 @@
         </div>
       </div>
 
-      <div class="theory muscle" id="card-muscle">
+      <div class="theory muscle" id="card-move">
         <div class="deco">肌</div>
         <div class="done-tag">圆满</div>
         <div class="ring">
           <svg width="74" height="74"><circle cx="37" cy="37" r="30" fill="none" stroke="rgba(78,125,82,.18)" stroke-width="8"/>
-          <circle id="ring-muscle" cx="37" cy="37" r="30" fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" style="stroke:var(--muscle);transition:stroke-dashoffset .6s ease"/></svg>
-          <div class="val"><span id="pct-muscle">0%</span><small>薄肌</small></div>
+          <circle id="ring-move" cx="37" cy="37" r="30" fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" style="stroke:var(--muscle);transition:stroke-dashoffset .6s ease"/></svg>
+          <div class="val"><span id="pct-move">0%</span><small>薄肌</small></div>
         </div>
         <div class="theory-info">
           <div class="theory-name">薄肌理论<i>MOVE</i></div>
@@ -206,7 +206,16 @@
         <span>—— 三大理论 · 语录</span>
       </div>
 
-      <button class="demo-btn" id="demoBtn" onclick="toggleDemo()">演示模式 · 快速体验</button>
+      <div class="demo-row">
+        <div class="demo-text">
+          <b>演示模式</b>
+          <span>载入示例数据快速体验 · 关闭即清空演示记录，回到标准模式</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="demoSwitch" onchange="toggleDemo()">
+          <span class="slider"></span>
+        </label>
+      </div>
       <button class="install-btn" id="installBtn" onclick="installPWA()" style="display:none">安装到桌面 · 离线可用</button>
     </section>
   </main>
