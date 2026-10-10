@@ -5,7 +5,7 @@
  *   外部资源  → stale-while-revalidate（字体等，离线降级）
  * 升级版本号 CACHE_NAME 即可触发全量更新
  * ========================================================= */
-const CACHE_NAME = 'agoodday-v1';
+const CACHE_NAME = 'agoodday-v2';
 
 const PRECACHE_URLS = [
   './',
