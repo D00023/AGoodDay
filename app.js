@@ -39,6 +39,9 @@ function renderHome() {
     $('card-' + k).classList.toggle('done', p >= 1);
   });
   $('doneCount').textContent = 'TODAY · ' + doneCount() + '/3';
+  // 新用户引导：数据完全空白时展示演示模式入口
+  const pristine = !state.demo && !(state.history || []).length && state.streak === 0 && doneCount() === 0;
+  $('demoBanner').style.display = pristine ? 'block' : 'none';
   renderComment();
 }
 
@@ -99,8 +102,8 @@ function renderStats() {
     $('sum-' + k).textContent = Math.round(pctOf(k) * 100) + '%';
   });
 
-  // 近七日柱状图：mock 六天 + 今日实时
-  const days = THEORY_MOCK.history.concat([{
+  // 近七日柱状图：历史修行记录 + 今日实时
+  const days = (state.history || []).concat([{
     day: '今', water: state.water, move: state.move, sleep: state.sleep
   }]);
   const segMax = 40; // 单段满格高度 px
@@ -167,6 +170,9 @@ function renderMe() {
 
   // 语录轮换
   $('quoteText').textContent = THEORY_MOCK.quotes[new Date().getDate() % THEORY_MOCK.quotes.length];
+
+  // 演示模式入口状态
+  $('demoBtn').textContent = state.demo ? '退出演示模式 · 清空数据' : '演示模式 · 快速体验';
 }
 
 /* ---------- 总渲染 ---------- */
@@ -227,11 +233,29 @@ function quickAdd(key) {
   addMetric(key, delta, label);
 }
 
-/* 重置今日 */
-function resetAll() {
-  state.water = 0; state.move = 0; state.sleep = 0;
+/* 清空全部修行数据（回到零起点） */
+function clearAll() {
+  state = { ...THEORY_MOCK.defaults, history: [] };
   TheoryAPI.resetToday();
-  toast('今日修行已重置，从头再来');
+  renderAll();
+}
+
+function resetAll() {
+  clearAll();
+  toast('全部修行数据已清空，从头再来');
+}
+
+/* 演示模式：一键载入示例数据，供新用户快速体验 */
+function toggleDemo() {
+  if (state.demo) {
+    clearAll();
+    toast('已退出演示模式，修行归零');
+  } else {
+    const d = THEORY_MOCK.demo;
+    state = { ...state, water: d.water, move: d.move, sleep: d.sleep,
+      streak: d.streak, history: d.history.slice(), demo: true };
+    toast('演示模式已开启，尽情体验三大理论');
+  }
   renderAll();
 }
 
