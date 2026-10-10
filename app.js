@@ -171,8 +171,8 @@ function renderMe() {
   // 语录轮换
   $('quoteText').textContent = THEORY_MOCK.quotes[new Date().getDate() % THEORY_MOCK.quotes.length];
 
-  // 演示模式入口状态
-  $('demoBtn').textContent = state.demo ? '退出演示模式 · 清空数据' : '演示模式 · 快速体验';
+  // 演示模式开关状态
+  $('demoSwitch').checked = !!state.demo;
 }
 
 /* ---------- 总渲染 ---------- */
